@@ -1,7 +1,19 @@
 import streamlit as st
-print("Hello World")
-# This is the title of your application, it will be displayed at the top of the app.
-st.title('My Streamlit Application')
+from pages import home, classification, regression, clustering
 
-# This writes text to your app.
-st.write('Hello World! Welcome to my Streamlit application.')
+# Function to setup the main page layout and navigation
+def main():
+    st.sidebar.title("Navigation")
+    page_selection = st.sidebar.radio("Go to", ["Home", "Classification", "Regression", "Clustering"])
+
+    if page_selection == "Home":
+        home.load_page()
+    elif page_selection == "Classification":
+        classification.load_page()
+    elif page_selection == "Regression":
+        regression.load_page()
+    elif page_selection == "Clustering":
+        clustering.load_page()
+
+if __name__ == "__main__":
+    main()
