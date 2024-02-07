@@ -1,19 +1,18 @@
+# This page script will be placed inside the 'pages/' directory.
+
 import streamlit as st
-from pages import home, classification, regression, clustering
+import pandas as pd
 
-# Function to setup the main page layout and navigation
-def main():
-    st.sidebar.title("Navigation")
-    page_selection = st.sidebar.radio("Go to", ["Home", "Classification", "Regression", "Clustering"])
-
-    if page_selection == "Home":
-        home.load_page()
-    elif page_selection == "Classification":
-        classification.load_page()
-    elif page_selection == "Regression":
-        regression.load_page()
-    elif page_selection == "Clustering":
-        clustering.load_page()
+def load_page():
+    st.set_page_config(page_title="Upload Data", page_icon="📤")
+    st.title("Upload Data 📤")
+    
+    uploaded_file = st.file_uploader("Choose a CSV file", type=['csv'])
+    if uploaded_file is not None:
+        data = pd.read_csv(uploaded_file)
+        st.session_state['uploaded_data'] = data
+        st.success("Data successfully uploaded! 👍")
+        st.dataframe(data.head())  # Optionally display a preview of the uploaded data
 
 if __name__ == "__main__":
-    main()
+    load_page()
